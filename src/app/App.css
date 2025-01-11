@@ -1,0 +1,331 @@
+.app-container {
+    min-height: 100vh;
+}
+
+.app-content {
+    margin-top: 64px;
+    padding: 24px;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-not-found {
+    text-align: center;
+    padding: 40px;
+}
+
+.page-not-found .title {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.page-not-found .desc {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.app-header {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    padding: 0;
+}
+
+.app-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    float: left;
+}
+
+.app-title a {
+    text-decoration: none;
+    line-height: 64px;
+    font-size: 21px;
+    display: inline-block;
+    color: #fff;
+}
+
+.app-title a:hover {
+    color: #1890ff;
+}
+
+.app-menu {
+    float: right;
+    background: none;
+    border: none;
+}
+
+.app-menu .ant-dropdown-link {
+    color: rgba(255, 255, 255, 0.85);
+    display: inline-block;
+}
+
+.app-menu .ant-dropdown-link:hover {
+    color: #1890ff;
+}
+
+.login-container {
+    max-width: 420px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.login-form-button {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.signup-container {
+    max-width: 420px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.signup-form-button {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.new-poll-container {
+    max-width: 520px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.create-poll-form-button {
+    width: 100%;
+}
+
+.dynamic-delete-button {
+    margin-left: 8px;
+    color: #ff4d4f;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+    color: #ff7875;
+}
+
+.ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+}
+
+.polls-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.poll-card {
+    margin-bottom: 20px;
+}
+
+.poll-choices {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.poll-choice-radio {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 0;
+}
+
+.poll-choice-percent {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #1890ff;
+}
+
+.poll-footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.total-votes {
+    color: #8c8c8c;
+    font-size: 13px;
+}
+
+.load-more-polls {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.poll-loading {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 24px;
+}
+
+.poll-details {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.poll-choice-result {
+    margin-bottom: 20px;
+}
+
+.choice-text {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.vote-count {
+    display: block;
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 3px;
+}
+
+.poll-choice-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.vote-button {
+    width: 100%;
+}
+
+.poll-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.user-avatar-circle {
+    width: 120px;
+    height: 120px;
+    background-color: #00BCD4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.avatar-text {
+    color: #fff;
+    font-size: 60px;
+    font-weight: 500;
+}
+
+.user-summary {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.full-name {
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    margin-bottom: 5px;
+}
+
+.username {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.user-joined {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.user-poll-stats {
+    margin-top: 20px;
+}
+
+.user-poll-stats .ant-tabs-nav {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.user-poll-stats .ant-tabs-tab {
+    padding: 12px 16px;
+    font-size: 16px;
+}
+
+.polls-container {
+    margin-top: 20px;
+}
+
+.profile-tabs {
+    margin-top: 20px;
+}
+
+.profile-tabs .ant-tabs-nav {
+    margin-bottom: 20px;
+}
+
+.server-error-page {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 40px;
+    text-align: center;
+}
+
+.server-error-page .title {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.server-error-page .desc {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.server-error-page .go-back-btn {
+    min-width: 160px;
+}
+
+.app-content > .container {
+    flex: 1;
+    padding-bottom: 40px;
+} 
