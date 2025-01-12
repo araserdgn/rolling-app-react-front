@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { HomeOutlined, UserOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
 export default function AppHeader({ currentUser, isAuthenticated, onLogout }) {
-    const navigate = useNavigate();
-
     const handleMenuClick = ({ key }) => {
         if (key === 'logout') {
             onLogout();

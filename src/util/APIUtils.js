@@ -1,4 +1,4 @@
-import { API_BASE_URL, ACCESS_TOKEN, API_ERROR_MESSAGES } from '../constants';
+import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
 const request = async (options) => {
     const headers = new Headers({

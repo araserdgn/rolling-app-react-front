@@ -29,27 +29,31 @@ export default function PollList({ currentUser, username, type }) {
 
         promise
             .then(response => {
-                const newPolls = pageToLoad === 0 
-                    ? response.content 
-                    : [...polls, ...response.content];
-                setPolls(newPolls);
+                setPolls(prevPolls => {
+                    if (pageToLoad === 0) {
+                        return response.content;
+                    }
+                    return [...prevPolls, ...response.content];
+                });
                 setPage(pageToLoad + 1);
                 setHasMore(!response.last);
-                setLoading(false);
             })
             .catch(error => {
-                setLoading(false);
                 notification.error({
                     message: 'Polling App',
                     description: error.message || 'Anketler yüklenirken bir hata oluştu!'
                 });
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }, [username, type, size]);
 
     useEffect(() => {
+        setPolls([]);
         setPage(0);
         loadPollList(0);
-    }, [loadPollList]);
+    }, [username, type, loadPollList]);
 
     const handleVoteChange = (pollId, choiceId) => {
         setVotes({
