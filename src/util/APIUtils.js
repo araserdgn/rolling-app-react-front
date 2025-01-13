@@ -1,141 +1,95 @@
+import axios from 'axios';
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
-const request = async (options) => {
-    const headers = new Headers({
+// Axios instance oluşturma
+const api = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
         'Content-Type': 'application/json',
-    });
-
-    const token = localStorage.getItem(ACCESS_TOKEN);
-    if (token) {
-        headers.append('Authorization', `Bearer ${token}`);
     }
+});
 
-    const defaults = { headers: headers };
-    options = Object.assign({}, defaults, options);
-
-    try {
-        const response = await fetch(options.url, options);
-        
-        if (response.status === 401) {
-            const error = new Error('Oturum süreniz doldu veya yetkiniz yok');
-            error.status = 401;
-            throw error;
+// Request interceptor - her istekte token kontrolü
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem(ACCESS_TOKEN);
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
-        let json;
-        try {
-            json = await response.json();
-        } catch (e) {
-            if (!response.ok) {
-                const error = new Error('Sunucudan geçersiz yanıt alındı');
-                error.status = response.status;
-                throw error;
+// Response interceptor - hata yönetimi
+api.interceptors.response.use(
+    (response) => response.data,
+    (error) => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                localStorage.removeItem(ACCESS_TOKEN);
+                window.location.href = '/login';
             }
-            json = {};
-        }
-
-        if (!response.ok) {
-            const error = new Error(json.message || 'Bir hata oluştu');
-            error.status = response.status;
+            const customError = new Error(error.response.data.message || 'Bir hata oluştu');
+            customError.status = error.response.status;
+            throw customError;
+        } else if (error.request) {
+            throw new Error('Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.');
+        } else {
             throw error;
         }
-
-        return json;
-    } catch (error) {
-        if (!error.status) {
-            error.status = 500;
-        }
-        throw error;
     }
-};
+);
 
 // Auth API calls
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/sign-in",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-}
+export const login = (loginRequest) => {
+    return api.post('/auth/sign-in', loginRequest);
+};
 
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/sign-up",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-}
+export const signup = (signupRequest) => {
+    return api.post('/auth/sign-up', signupRequest);
+};
 
 // User API calls
-export function getCurrentUser() {
-    return request({
-        url: API_BASE_URL + "/users/me",
-        method: 'GET'
-    });
-}
+export const getCurrentUser = () => {
+    return api.get('/users/me');
+};
 
-export function getUserProfile(username) {
-    return request({
-        url: API_BASE_URL + "/users/" + username,
-        method: 'GET'
-    });
-}
+export const getUserProfile = (username) => {
+    return api.get(`/users/${username}`);
+};
 
-export function checkUsernameAvailability(username) {
-    return request({
-        url: API_BASE_URL + "/users/checkUsernameAvailability?username=" + username,
-        method: 'GET'
-    });
-}
+export const checkUsernameAvailability = (username) => {
+    return api.get(`/users/checkUsernameAvailability?username=${username}`);
+};
 
-export function checkEmailAvailability(email) {
-    return request({
-        url: API_BASE_URL + "/users/checkEmailAvailability?email=" + email,
-        method: 'GET'
-    });
-}
+export const checkEmailAvailability = (email) => {
+    return api.get(`/users/checkEmailAvailability?email=${email}`);
+};
 
 // Poll API calls
-export function createPoll(pollData) {
-    return request({
-        url: API_BASE_URL + "/polls",
-        method: 'POST',
-        body: JSON.stringify(pollData)
-    });
-}
+export const createPoll = (pollData) => {
+    return api.post('/polls', pollData);
+};
 
-export function getAllPolls(page = 0, size = 10) {
-    return request({
-        url: API_BASE_URL + `/polls?page=${page}&size=${size}`,
-        method: 'GET'
-    });
-}
+export const getAllPolls = (page = 0, size = 10) => {
+    return api.get(`/polls?page=${page}&size=${size}`);
+};
 
-export function getUserCreatedPolls(username, page = 0, size = 10) {
-    return request({
-        url: API_BASE_URL + `/users/${username}/polls?page=${page}&size=${size}`,
-        method: 'GET'
-    });
-}
+export const getUserCreatedPolls = (username, page = 0, size = 10) => {
+    return api.get(`/users/${username}/polls?page=${page}&size=${size}`);
+};
 
-export function getUserVotedPolls(username, page = 0, size = 10) {
-    return request({
-        url: API_BASE_URL + `/users/${username}/votes?page=${page}&size=${size}`,
-        method: 'GET'
-    });
-}
+export const getUserVotedPolls = (username, page = 0, size = 10) => {
+    return api.get(`/users/${username}/votes?page=${page}&size=${size}`);
+};
 
-export function getPollById(pollId) {
-    return request({
-        url: API_BASE_URL + "/polls/" + pollId,
-        method: 'GET'
-    });
-}
+export const getPollById = (pollId) => {
+    return api.get(`/polls/${pollId}`);
+};
 
-export function castVote(pollId, voteData) {
-    return request({
-        url: API_BASE_URL + "/polls/" + pollId + "/votes",
-        method: 'POST',
-        body: JSON.stringify(voteData)
-    });
-} 
+export const castVote = (pollId, voteData) => {
+    return api.post(`/polls/${pollId}/votes`, voteData);
+}; 
